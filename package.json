@@ -2,10 +2,25 @@
   "name": "drawing-app",
   "version": "0.1.0",
   "private": true,
+  "main": "server/index",
+  "proxy": "http://localhost:5000",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^5.0.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "massive": "^5.7.7",
+    "pg": "^7.8.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5",
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
