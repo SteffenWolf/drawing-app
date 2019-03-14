@@ -1,21 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios'
+import {withRouter} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { clearUser } from '../../ducks/reducer'
 
-function Nav(props) {
+class Nav extends Component {
+  constructor(props){
+    super(props)
 
-  if (props.location.pathname !== '/' && props.location.pathname !== '/register'){
-    return(
-      <div>
-        <Link to={'/board'}><button>Current Game</button></Link>
-        <Link to={'/new_game'}><button>New Game</button></Link>
-        <Link to={'/'}  ><button>Logout</button></Link>
-      </div>
-    )
-    
-   } else {
-    return null
+    this.state ={}
+  }
 
-  }  
+  logout = async () => {
+    await axios.post('/api/auth/logout');
+    this.props.clearUser()
+    await this.props.history.push('/');
+  }
+
+  render() {
+    if (this.props.location.pathname !== '/' && this.props.location.pathname !== '/register'){
+      return(
+        <div>
+          <Link to={'/board'}><button>Current Game</button></Link>
+          <Link to={'/new_game'}><button>New Game</button></Link>
+          <button onClick={this.logout}>Logout</button>
+        </div>
+      )
+      
+    } else {
+      return null
+
+    } 
+  }
 }
 
-export default Nav
+const mapStateToProps = reduxState => {
+  return {
+    id: reduxState.id,
+    username: reduxState.username
+  }
+  
+}
+const mapDispatchToProps = {
+  clearUser
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Nav));

@@ -9,6 +9,7 @@ import store from "./ducks/store"
 
 
 ReactDOM.render(
+  
 <Provider store={store}>
   <HashRouter>
     <App />

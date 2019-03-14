@@ -60,10 +60,19 @@ class Register extends Component {
 
   }
 
+  reset = () => {
+    this.setState({
+      username: '',
+      email: '',
+      password: '',
+      confPass: '',
+    })
+  }
+
 
 
   render() {
-    const { username, email, password } = this.state
+    const { username, email, password, confPass } = this.state
     return (
       <div>
         <h1>Create an account</h1>
@@ -73,10 +82,10 @@ class Register extends Component {
         <br></br>
         <input placeholder="Password" type="password" value={password} onChange={e => this.handleChange('password', e.target.value)} />
         <br></br>
-        <input placeholder="Confirm Password" type="password" onChange={e => this.handleChange('confPass', e.target.value)} />
+        <input placeholder="Confirm Password" type="password" value={confPass} onChange={e => this.handleChange('confPass', e.target.value)} />
         <br></br>
         <button id='submit' onClick={this.register} disabled={this.state.btnStat}>Create</button>
-        <button>Cancel</button>
+        <button onClick={this.reset}>Reset</button>
       </div>
     )
   }

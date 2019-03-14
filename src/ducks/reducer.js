@@ -1,5 +1,7 @@
 const initialState = {
   username: '',
+  profile_pic: '',
+  email: '',
   }
   
   const UPDATE_USER = 'UPDATE_USER'
@@ -22,10 +24,10 @@ const initialState = {
     const{type, payload} = action;
     switch(type) {
       case UPDATE_USER:
-        const{id, username} = payload;
-        return {...state, id, username};
+        const{id, username, email, profile_pic} = payload;
+        return {...state, id, username, profile_pic, email}
         case DESTROY_USER:
-        return {...state, id: 0, username: ''}
+        return {...state, id: 0, username: '', profile_pic: '', email: 0}
       default:
         return state
     }

@@ -1,24 +1,24 @@
 require('dotenv').config();
-const express = require('express'),
+const express = require('express')
       session = require('express-session')
       massive = require('massive')
       ac = require('./controllers/auth_controller')
       gc = require('./controllers/game_controller')
 
-const pg = require('pg')
-const pgSession = require('connect-pg-simple')(session)
+// const pg = require('pg')
+// const pgSession = require('connect-pg-simple')(session)
 
 const app = express(), {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env;
 
-const pgPool = new pg.Pool({
-  connectionString: CONNECTION_STRING
-})
+// const pgPool = new pg.Pool({
+//   connectionString: CONNECTION_STRING
+// })
 
 app.use(express.json());
 app.use(session({
-  store: new pgSession({
-    pool: pgPool
-  }),
+  // store: new pgSession({
+  //   pool: pgPool
+  // }),
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
@@ -36,4 +36,8 @@ massive(CONNECTION_STRING).then(db => {
 //ENDPOINTS
 app.post('/api/auth/register', ac.register); 
 app.post('/api/auth/login', ac.login);
-app.get('/api/auth/current', ac.getUser) 
+app.post('/api/auth/logout', ac.logout);
+app.get('/api/auth/current', ac.getUser);
+
+
+app.delete('/api/user/delete/:id', ac.deleteUser)

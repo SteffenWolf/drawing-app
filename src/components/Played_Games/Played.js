@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import { updateUser } from '../../ducks/reducer'
 import axios from 'axios'
+import { updateUser } from '../../ducks/reducer'
 
 
-class New_Game extends Component {
+
+class Played extends Component {
   constructor(props){
     super(props)
 
@@ -25,21 +26,16 @@ class New_Game extends Component {
         let res = await axios.get('/api/auth/current');      
         this.props.updateUser(res.data)
       } catch (err) {
-        this.props.history.push('/new_game')
+        this.props.history.push('/played')
       }
     } 
   }
 
   
     render() {
-      const {username} = this.props
       return(
       <div>
-        {username}
-        <button>Card 1</button>
-        <button>Card 2</button>
-        <button>Card 3</button>
-        <input placeholder='Add your own' />
+        <canvas width="512" height="512" style={{border: "1px solid black"}} ></canvas>
       </div>
     )
   }
@@ -52,4 +48,4 @@ const mapDispatchToProps = {
   updateUser
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(New_Game)
+export default connect(mapStateToProps, mapDispatchToProps)(Played)

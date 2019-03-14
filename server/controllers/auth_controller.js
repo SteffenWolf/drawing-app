@@ -53,4 +53,23 @@ module.exports = {
       res.sendStatus(401)
     }
   },
+
+  logout:  (req, res) => {
+     req.session.destroy(function(){
+      res.sendStatus(200)
+    })
+  },
+
+  deleteUser: (req, res) => {
+    const db = req.app.get('db');
+    const {id} = req.params;
+    console.log(id)
+
+    db.Users.delete_user([id]).then(user => {
+      res.status(200).send(user)
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+  }
 }

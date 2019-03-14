@@ -78,7 +78,8 @@ class Auth extends Component {
 
 const mapStateToProps = (reduxState) => {
   return {
-    id: reduxState.id
+    id: reduxState.id,
+    username: reduxState.username
   }
 }
 
