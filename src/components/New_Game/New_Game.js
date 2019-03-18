@@ -10,7 +10,8 @@ class New_Game extends Component {
 
     this.state = {
       username: '',
-      id: ''
+      id: '',
+      text: '',
     }
   }
 
@@ -30,16 +31,48 @@ class New_Game extends Component {
     } 
   }
 
+  handleChange(prop, val) {
+    this.setState({
+      [prop]: val
+    })
+  }
+
+  startGame = async () => {
+    let text = this.state.text
+    
+    try{
+      axios.put('/api/game/create', {text});
+
+      console.log(this.state.text);      
+      
+      this.props.history.push('/board')
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+  reset = () =>{
+    this.setState({
+      text: ''
+    })
+  }
+
+  handleSubmitNewGame = () => {
+    this.startGame();
+    this.reset();
+  }
+
   
     render() {
       const {username} = this.props
+      const {text} = this.state.text
       return(
-      <div>
+      <div className='font-effect-anaglyph'>
         {username}
+        <div>Game Element goes here</div>
         <button>Card 1</button>
-        <button>Card 2</button>
-        <button>Card 3</button>
-        <input placeholder='Add your own' />
+        <input placeholder='Add your own' value={text} onChange={e => this.handleChange('text', e.target.value)}/>
+        <button onClick={this.startGame}>Submit</button>
       </div>
     )
   }

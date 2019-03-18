@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { updateUser } from '../../ducks/reducer'
 import axios from 'axios'
-import "./Board.css"
+import '../../App.css'
 
 class Board extends Component {
   constructor(props){
@@ -16,7 +16,7 @@ class Board extends Component {
       undos: [],
       redos: [],
       finImage: '',
-      myImage: []
+      imgData: ''
     }
     this.setColor = this.setColor.bind(this)
   }
@@ -25,6 +25,7 @@ class Board extends Component {
   componentDidMount(){
     this.getUser()
     this.initializeCanvas()
+    this.toImage()
   }
 
   getUser = async () => {
@@ -94,7 +95,8 @@ class Board extends Component {
   }
   
     
-    setColor(color) {
+    setColor(color, isErase) {
+      this.ctx.globalCompositeOperation = isErase ? 'destination-out' : 'source-over'
       this.setState({color: color})
     }
 
@@ -109,47 +111,43 @@ class Board extends Component {
     }
 
     toImage = () => {
-      // let ctx = this.myImage.getContext('2d');
-
-      var img = new Image();
-      img.src = this.state.finImage
-      img.onload = function() {
-        this.img.current.drawImage(img, 0, 0)
-      }
+      this.setState({
+      })
     }
 
     
     
   render() {
     const {username} = this.props
-    console.log(this.state.finImage)
     return (
-        <div>
+        <div className="mainWrap">
           {username}
           <br></br>
-          <canvas ref={this.image} className="canvas" width="500px" height="500" id="canvas" style={{border: "1px solid black"}}> If you are reading this you are using a browser that is out of date. Please use the most recent version of Firefox or Chrome</canvas>
+          <canvas ref={this.image} className="canvas" width="500px" height="700px" id="canvas" style={{border: "1px solid black"}}> If you are reading this you are using a browser that is out of date. Please use the most recent version of Firefox or Chrome</canvas>
           <br></br>
-          <button className="colors" onClick={() => this.setColor('#0A3410')}> Sap Green</button>
-          <button className="colors"  onClick={() => this.setColor('#4E1500')}>Alizarin Crimson</button>
-          <button className="colors"  onClick={() => this.setColor('#221B15')}>Van Dyke Brown</button>
-          <button className="colors"  onClick={() => this.setColor('#5F2E1F')}>Dark Sienna</button>
-          <button className="colors"  onClick={() => this.setColor('#000000')}>Midnight Black</button>
-          <button className="colors"  onClick={() => this.setColor('#021E44')}>Prussian Blue</button>
-          <button className="colors"  onClick={() => this.setColor('#0C0040')}>Phthalo Blue</button>
-          <button className="colors"  onClick={() => this.setColor('#102E3C')}>Phthalo Green</button>
-          <button className="colors"  onClick={() => this.setColor('#FFEC00')}>Cadmium Yellow</button>
-          <button className="colors"  onClick={() => this.setColor('#C79B00')}>Yellow Ochre</button>
-          <button className="colors"  onClick={() => this.setColor('#FFB800')}>Indian Yellow</button>
-          <button className="colors"  onClick={() => this.setColor('#DB0000')}>Bright Red</button>
-          <button className="colors"  onClick={() => this.setColor('#FFFFFF')}>Titanium White</button>
-          <button className="colors"  onClick={() => this.setColor('rgba(255, 255, 255, 1)')}>erase</button>
-          <input type="range" min="2" max="150" name="thickness" value={this.state.value}  step=".5" onChange={(e) => this.setWidth(e.target.value)} /><label for="thickness">Thicccness</label> 
+          <div className='font-effect-anaglyph'>
+            <button className="colors" onClick={() => this.setColor('#0A3410')}> Sap Green</button>
+            <button className="colors"  onClick={() => this.setColor('#4E1500')}>Alizarin Crimson</button>
+            <button className="colors"  onClick={() => this.setColor('#221B15')}>Van Dyke Brown</button>
+            <button className="colors"  onClick={() => this.setColor('#5F2E1F')}>Dark Sienna</button>
+            <button className="colors"  onClick={() => this.setColor('#000000')}>Midnight Black</button>
+            <button className="colors"  onClick={() => this.setColor('#021E44')}>Prussian Blue</button>
+            <button className="colors"  onClick={() => this.setColor('#0C0040')}>Phthalo Blue</button>
+            <button className="colors"  onClick={() => this.setColor('#102E3C')}>Phthalo Green</button>
+            <button className="colors"  onClick={() => this.setColor('#FFEC00')}>Cadmium Yellow</button>
+            <button className="colors"  onClick={() => this.setColor('#C79B00')}>Yellow Ochre</button>
+            <button className="colors"  onClick={() => this.setColor('#FFB800')}>Indian Yellow</button>
+            <button className="colors"  onClick={() => this.setColor('#DB0000')}>Bright Red</button>
+            <button className="colors"  onClick={() => this.setColor('#FFFFFF')}>Titanium White</button>
+            <button className="colors"  onClick={() => this.setColor('rgba(255, 255, 255, 1)', true)}>erase</button>
+            <input type="range" min="2" max="75" name="thickness" value={this.state.value}  step="1" onChange={(e) => this.setWidth(e.target.value)} /><label for="thickness">Thicccness</label> 
 
-          <button id="undo" onClick={this.remove}>UNDO</button>
-          <button onClick={this.toData}>Submit</button>
-          <br></br>
-          <img src={this.img} alt='test' refs={this.myImage}/>
-          <button onClick={this.toImage}>Draw</button>
+            <button id="undo" onClick={this.remove}>UNDO</button>
+            <button onClick={this.toData}>Submit</button>
+            <br></br>
+            <img src={this.state.finImage} alt='test' ref={this.myImage}/>
+            <button onClick={this.toImage}>Draw</button>
+          </div>
         </div>
     )
  }

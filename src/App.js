@@ -11,8 +11,10 @@ class App extends Component {
     return (
       
       <div className="App">
-        <Nav location={this.props.location}/>
-        {routes}
+        <div className='font-effect-anaglyph'>
+          <Nav location={this.props.location}/>
+          {routes}
+        </div>
       </div>
     );
   }

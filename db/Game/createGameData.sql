@@ -1,0 +1,1 @@
+insert into game_data (game_id, text, game_round) values ( ${game_id}, ${text}, ${game_round})

@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  font-family: 'Allerta Stencil', sans-serif;
+  
 }
 
 .App-logo {
@@ -21,6 +23,30 @@
 
 .App-link {
   color: #61dafb;
+}
+
+button {
+  font-family: 'Allerta Stencil', sans-serif;  
+}
+
+.proPic {
+  border-radius: 50%;
+  height: 65px;
+  width: 65px;
+  float: left
+}
+
+.navbar {
+  height: 65px;
+}
+
+.mainWrap {
+  width: 100vw
+}
+
+.canvas {
+  touch-action: none;
+
 }
 
 @keyframes App-logo-spin {

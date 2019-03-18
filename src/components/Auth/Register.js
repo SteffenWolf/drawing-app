@@ -21,7 +21,6 @@ class Register extends Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState.password, this.state.password)
     if(prevState.password !== this.state.password && prevState.confPass !== this.state.confPass) {
       this.setState({
         btnStat: false
@@ -42,16 +41,18 @@ class Register extends Component {
    }
   }
 
-  register = async () => {
+  register = async (e) => {
+    e.preventDefault()
     let user = {
-      username: this.state.username,
+      username: this.state.username.toLowerCase(),
       password: this.state.password,
       email: this.state.email,
+      profile_pic: 'https://robohash.org/'+this.state.username.toLowerCase(),
     }
     try {
       let res = await axios.post('/api/auth/register', user);
       this.props.updateUser(res.data);
-      this.props.history.push('/new_game');
+      this.props.history.push('/profile');
 
     } catch (err) {
       console.log(err)
@@ -75,6 +76,7 @@ class Register extends Component {
     const { username, email, password, confPass } = this.state
     return (
       <div>
+        <form onSubmit={this.register}>
         <h1>Create an account</h1>
         <input placeholder="Username" value={username} onChange={e => this.handleChange('username', e.target.value)} />
         <br></br>
@@ -84,8 +86,9 @@ class Register extends Component {
         <br></br>
         <input placeholder="Confirm Password" type="password" value={confPass} onChange={e => this.handleChange('confPass', e.target.value)} />
         <br></br>
-        <button id='submit' onClick={this.register} disabled={this.state.btnStat}>Create</button>
+        <button type='submit' id='submit' disabled={this.state.btnStat}>Create</button>
         <button onClick={this.reset}>Reset</button>
+        </form>
       </div>
     )
   }

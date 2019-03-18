@@ -1,0 +1,1 @@
+insert into user_games (game_id, user_id, played_rounds) values (${game_id}, ${user_id}, '1')

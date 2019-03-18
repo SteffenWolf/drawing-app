@@ -41,3 +41,5 @@ app.get('/api/auth/current', ac.getUser);
 
 
 app.delete('/api/user/delete/:id', ac.deleteUser)
+app.put('/api/game/create', gc.createGame)
+// app.put('/api/game/update', gc.update)

@@ -46,7 +46,6 @@ class Profile extends Component {
       const {username, email, profile_pic} = this.props
       return(
       <div>
-        <img src={profile_pic} alt="profile pic"/>
         <button onClick={this.deleteUser}>delete</button>
         {username}
         {email}

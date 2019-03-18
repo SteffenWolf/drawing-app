@@ -32,7 +32,7 @@ class Auth extends Component {
       try {
         let res = await axios.get('/api/auth/current');      
         this.props.updateUser(res.data)
-        this.props.history.push('/new_game')
+        this.props.history.push('/')
       } catch (err) {
         console.log(err)
         }
@@ -43,7 +43,7 @@ class Auth extends Component {
 
     login = async () => {
       let user = {
-        username: this.state.username,
+        username: this.state.username.toLowerCase(),
         password: this.state.password
       }
       try {
@@ -56,6 +56,7 @@ class Auth extends Component {
         
       }
     }
+
   
     render() {
       const {username, password} = this.state;
