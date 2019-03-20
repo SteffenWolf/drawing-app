@@ -43,7 +43,7 @@ class Profile extends Component {
 
   
     render() {
-      const {username, email, profile_pic} = this.props
+      const {username, email} = this.props
       return(
       <div>
         <button onClick={this.deleteUser}>delete</button>

@@ -41,11 +41,9 @@ class New_Game extends Component {
     let text = this.state.text
     
     try{
-      axios.put('/api/game/create', {text});
+      axios.put('/api/game/create', {text});  
+    // this.props.history.push('/board');
 
-      console.log(this.state.text);      
-      
-      this.props.history.push('/board')
     } catch(err) {
       console.log(err);
     }
@@ -65,14 +63,14 @@ class New_Game extends Component {
   
     render() {
       const {username} = this.props
-      const {text} = this.state.text
+      const {text} = this.state
       return(
       <div className='font-effect-anaglyph'>
         {username}
         <div>Game Element goes here</div>
         <button>Card 1</button>
         <input placeholder='Add your own' value={text} onChange={e => this.handleChange('text', e.target.value)}/>
-        <button onClick={this.startGame}>Submit</button>
+        <button onClick={this.handleSubmitNewGame}>Submit</button>
       </div>
     )
   }

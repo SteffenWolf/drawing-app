@@ -19,7 +19,7 @@ class Nav extends Component {
   }
 
   render() {
-    const {username, email, profile_pic} = this.props
+    const {profile_pic} = this.props
     if (this.props.location.pathname !== '/' && this.props.location.pathname !== '/register'){
       return(
         <div class="navbar">

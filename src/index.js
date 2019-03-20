@@ -11,7 +11,7 @@ import store from "./ducks/store"
 ReactDOM.render(
   
 <Provider store={store}>
-<link href="https://fonts.googleapis.com/css?family=Allerta+Stencil&effect=anaglyph" rel="stylesheet"></link>
+<link href="https://fonts.googleapis.com/css?family=Allerta+Stencil&effect=anaglyph|font-effect-neon" rel="stylesheet"></link>
   <HashRouter>
     <App className='font-effect-anaglyph'/>
   </HashRouter>
