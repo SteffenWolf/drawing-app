@@ -1,0 +1,1 @@
+select image, text, game_round from game_Data where game_id = ${game_id}

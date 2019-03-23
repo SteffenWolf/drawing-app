@@ -26,6 +26,7 @@ class Nav extends Component {
           <img class="proPic" src={profile_pic} alt="profile pic"/>
           <Link to={'/board'}><button>Current Game</button></Link>
           <Link to={'/new_game'}><button>New Game</button></Link>
+          <Link to={'/played'}><button>Gallery</button></Link>
           <button onClick={this.logout}>Logout</button>
         </div>
       )

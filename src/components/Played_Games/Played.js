@@ -11,12 +11,17 @@ class Played extends Component {
 
     this.state = {
       username: '',
-      id: ''
+      id: '',
+      text: '',
+      completedGame: [],
+      fullGame: [],
+      isShown: false,
     }
   }
 
   componentDidMount(){
     this.getUser()
+    this.getCompletedGames()
   }
 
   getUser = async () => {
@@ -31,21 +36,68 @@ class Played extends Component {
     } 
   }
 
+  getCompletedGames = async () => {
+    let res = await axios.get('/api/game/completedgame')
+
+    this.setState({
+      completedGame: res.data
+    })
+  }
+
+  getFullGame = async (game_id) => {
+
+    let res = await axios.get(`/api/game/fullgame/${game_id}`)
+
+    this.setState({
+      isShown: true,
+      fullGame: res.data
+    })
+  }
+
   
     render() {
+      const { completedGame } = this.state
+      let mappedGames = []
+      let fullGameMap = []
+
+      if(completedGame.length > 0){
+        mappedGames = completedGame.map((game) => <li onClick={() => this.getFullGame(game.id)}>{game.text}{game.id}</li>)
+        
+      }
+
+      if(this.state.isShown === true && this.state.fullGame){
+        fullGameMap = this.state.fullGame.map((game) => {
+          if(game.text === null){
+            return <div>{game.game_round+1}
+              <img src={game.image} alt="game element" key={game.game_round.toString()}/>
+            </div>
+          } else {
+            return <p key={game.game_round.toString()}> {game.game_round+1} {game.text}</p>
+          }
+        })
+
+      }
+
+      
       return(
       <div>
-        <canvas width="512" height="512" style={{border: "1px solid black"}} ></canvas>
+
+        {this.state.isShown ? (
+          <div>  {fullGameMap} </div>
+          ) : (
+            <ul>{mappedGames}</ul>
+        )}
+        <button></button>
       </div>
     )
   }
 }
 
 const mapStateToProps = reduxState => {
-  return reduxState
+  return reduxState.completedGame
 }
 const mapDispatchToProps = {
-  updateUser
+  updateUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Played)

@@ -32,7 +32,6 @@ class Register extends Component {
     await this.setState({
       [prop]: val
     })
-    console.log(this.state.password, this.state.confPass)
     if (this.state.password === this.state.confPass && this.state.password !== '') {
       this.setState({btnStat: false})
 

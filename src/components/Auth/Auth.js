@@ -70,7 +70,7 @@ class Auth extends Component {
           <br></br>
           <button onClick={this.login}>Login</button>
           <br></br>
-          <Link to="/register"><button onClick={this.register}>Register</button></Link>
+          <Link to="/register"><button>Register</button></Link>
 
         </div>
     )

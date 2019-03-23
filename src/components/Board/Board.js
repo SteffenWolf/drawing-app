@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { updateUser } from '../../ducks/reducer';
+import { updateUser, activeGame } from '../../ducks/reducer';
 import axios from 'axios';
 import '../../App.css';
 import { v4 as randomString } from 'uuid';
+
 
 class Board extends Component {
   constructor(props){
@@ -12,12 +13,13 @@ class Board extends Component {
     this.image = React.createRef()
     this.state = {
       username: '',
-      color: 'black',
+      color: 'White',
       lineWidth: 4,
       undos: [],
       redos: [],
       finImage: '',
       isUploading: false,
+      url: ''
     }
     this.setColor = this.setColor.bind(this)
   }
@@ -41,7 +43,11 @@ class Board extends Component {
   }
 
   remove = () => {
+    let undos = this.state.undos
+
     this.ctx.putImageData(this.state.undos.pop(), 0, 0)
+    undos.push(this.ctx.getImageData(0,0, this.image.width, this.image.height))    
+    
   }
   
   redo = () => {
@@ -104,22 +110,19 @@ class Board extends Component {
       this.setState({lineWidth: num})
     }
 
-    toData = () => {
-      this.setState({
-        finImage: this.image.current.toDataURL()
-      })
-    }
 
 
-    getSignedRequest = ([file]) => {
+
+    getSignedRequest = async (file) => {
+      console.log(file)
       this.setState({isUploading: true})
+      console.log(this.state.finImage)
    
-      const fileName = `${randomString()}-${file.name.replace(/\s/g, '-')}`
    
       axios.get('/sign-s3', {
         params: {
-          'file-name': fileName,
-          'file-type': file.type
+          'file-name': file.fileName,
+          'file-type': file.fileType
         }
       }).then( (response) => {
         const { signedRequest, url } = response.data 
@@ -132,22 +135,22 @@ class Board extends Component {
     uploadFile = (file, signedRequest, url) => {
       const options = {
         headers: {
-          'Content-Type': file.type,
+          'Content-Type': file.fileType,
+          'Content-Encoding': file.contentEncoding
         },
       };
   
       axios
-        .put(signedRequest, file, options)
+        .put(signedRequest, file.fileData, options)
         .then(response => {
-          this.setState({ isUploading: false, url });
-          // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
-          
+        this.sendImage(url)
+
         })
         .catch(err => {
           this.setState({
             isUploading: false,
           });
-          if (err.response.status === 403) {
+          if (err.response !== void 0 && err.response.status === 403) {
             alert(
               `Your request for a signed URL failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
                 err.stack
@@ -159,36 +162,61 @@ class Board extends Component {
         });
     };
 
+    sendImage = async (image) => {
+      const {id, current_turn} = this.props.game
+      
+      try {
+       await axios.post('/api/game/addimage', {image, id, current_turn})
+       this.props.history.push('/new_game')
+      } catch( err ) {
+        console.log(err);
+      }
+    }
+
+    submitImage = async () => {
+      this.image.current.toBlob(blob => {
+        this.getSignedRequest({
+          fileName: randomString() + '.png',
+          fileData: blob,
+          fileType: 'image/png'
+        });
+      })
+    }
+
+
+    
 
     
     
   render() {
-    const {username} = this.props
+    const {text} = this.props.game
+
     return (
         <div className="mainWrap">
-          {username}
+
+          <h2>You are drawing: {text}</h2>
           <br></br>
           <canvas ref={this.image} className="canvas" width="500px" height="700px" id="canvas" style={{border: "1px solid black"}}> If you are reading this you are using a browser that is out of date. Please use the most recent version of Firefox or Chrome</canvas>
           <br></br>
           <div className='font-effect-neon'>
-            <button className="colors" onClick={() => this.setColor('#0A3410')}> Sap Green</button>
-            <button className="colors"  onClick={() => this.setColor('#4E1500')}>Alizarin Crimson</button>
-            <button className="colors"  onClick={() => this.setColor('#221B15')}>Van Dyke Brown</button>
-            <button className="colors"  onClick={() => this.setColor('#5F2E1F')}>Dark Sienna</button>
-            <button className="colors"  onClick={() => this.setColor('#000000')}>Midnight Black</button>
-            <button className="colors"  onClick={() => this.setColor('#021E44')}>Prussian Blue</button>
-            <button className="colors"  onClick={() => this.setColor('#0C0040')}>Phthalo Blue</button>
-            <button className="colors"  onClick={() => this.setColor('#102E3C')}>Phthalo Green</button>
-            <button className="colors"  onClick={() => this.setColor('#FFEC00')}>Cadmium Yellow</button>
-            <button className="colors"  onClick={() => this.setColor('#C79B00')}>Yellow Ochre</button>
-            <button className="colors"  onClick={() => this.setColor('#FFB800')}>Indian Yellow</button>
-            <button className="colors"  onClick={() => this.setColor('#DB0000')}>Bright Red</button>
-            <button className="colors"  onClick={() => this.setColor('#FFFFFF')}>Titanium White</button>
+            <button className="colors" onClick={() => this.setColor('#0A3410')} style={{borderRadius: '50%', backgroundColor: '#0A3410', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#4E1500')} style={{borderRadius: '50%', backgroundColor: '#4E1500', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#221B15')} style={{borderRadius: '50%', backgroundColor: '#221B15', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#5F2E1F')} style={{borderRadius: '50%', backgroundColor: '#5F2E1F', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#000000')} style={{borderRadius: '50%', backgroundColor: '#000000', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#021E44')} style={{borderRadius: '50%', backgroundColor: '#021E44', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#0C0040')} style={{borderRadius: '50%', backgroundColor: '#0C0040', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#102E3C')} style={{borderRadius: '50%', backgroundColor: '#102E3C', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#FFEC00')} style={{borderRadius: '50%', backgroundColor: '#FFEC00', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#C79B00')} style={{borderRadius: '50%', backgroundColor: '#C79B00', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#FFB800')} style={{borderRadius: '50%', backgroundColor: '#FFB800', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#DB0000')} style={{borderRadius: '50%', backgroundColor: '#DB0000', height: '25px', width: '25px', border: 'none'}}></button>
+            <button className="colors"  onClick={() => this.setColor('#FFFFFF')} style={{borderRadius: '50%', backgroundColor: '#FFFFFF', height: '25px', width: '25px', borderBottomStyle: 'outset', borderColor: 'red', borderWidht: '.1px'}}></button>
             <button className="colors"  onClick={() => this.setColor('rgba(255, 255, 255, 1)', true)}>erase</button>
             <input type="range" min="2" max="75" name="thickness" value={this.state.value}  step="1" onChange={(e) => this.setWidth(e.target.value)} /><label for="thickness">Thicccness</label> 
             
             <button id="undo" onClick={this.remove}>UNDO</button>
-            <button onClick={this.sendImg}>Submit</button>
+            <button onClick={this.submitImage}>Submit</button>
             <br></br>
           </div>
         </div>
@@ -199,12 +227,14 @@ class Board extends Component {
 const mapStateToProps = reduxState => {
   return {
     id: reduxState.id,
-    username: reduxState.username
+    username: reduxState.username,
+    game: reduxState.game
   }
   
 }
 const mapDispatchToProps = {
   updateUser,
+  activeGame,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

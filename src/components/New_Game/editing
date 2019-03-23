@@ -1,0 +1,9 @@
+ {this.state.editing ? (
+                       <input className='edit-box'
+                           type='text'
+                           value={this.state.review}
+                           onChange={e => this.handleReview(e.target.value)}
+                       />
+                   ) : (
+                       <p>{review.review}</p>
+                   )}

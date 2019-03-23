@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import { activeGame } from '../../ducks/reducer'
 import axios from 'axios'
 
 
@@ -9,7 +10,9 @@ class Guess extends Component {
 
     this.state = {
       username: '',
-      id: ''
+      id: '',
+      game: {},
+      text: ''
     }
   }
 
@@ -29,25 +32,47 @@ class Guess extends Component {
     } 
   }
 
+  async handleChange(prop, val) {
+    await this.setState({
+      [prop]: val
+    })
+  }
+
+  submitText = async () => {
+    const {id, current_turn} = this.props.game
+    const { text } = this.state
+
+    try {
+      await axios.post('/api/game/addtext', {text, id, current_turn})
+      console.log(text)
+      this.props.history.push('/new_game')
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
   
     render() {
-      const {username} = this.props
+      const { text } = this.state
+      const {image} = this.props.game
       return(
       <div>
-        {/* <img></img>`` 0bcxa 1234567890-/*- */}
-        <input placeholder='What is it?' />
-        <button>Submit</button>
-        {username}
+        <img src={ image } alt="game element"/>
+        <br></br>
+        <input value={text} onChange={e => this.handleChange('text', e.target.value)} placeholder='What is it?' />
+        <button onClick={this.submitText} >Submit</button>
       </div>
     )
   }
 }
 
 const mapStateToProps = reduxState => {
-  return reduxState
+  return {
+    game: reduxState.game
+  }
 }
 const mapDispatchToProps = {
-  
+  activeGame
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Guess)

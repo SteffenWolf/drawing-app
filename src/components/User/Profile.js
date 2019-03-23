@@ -13,12 +13,36 @@ class Profile extends Component {
       username: '',
       email: '',
       id: '',
-      profile_pic: ''
+      profile_pic: '',
+      editing: false,
+      completedGame: [],
+      fullGame: [],
+
     }
   }
 
   componentDidMount(){
     this.getUser()
+    this.getCompletedGames()
+
+  }
+
+  getCompletedGames = async () => {
+    let res = await axios.get('/api/game/completedgame')
+
+    this.setState({
+      completedGame: res.data
+    })
+  }
+
+  getFullGame = async (game_id) => {
+
+    let res = await axios.get(`/api/game/fullgame/${game_id}`)
+
+    this.setState({
+      isShown: true,
+      fullGame: res.data
+    })
   }
 
   getUser = async () => {
@@ -41,14 +65,39 @@ class Profile extends Component {
     await this.props.history.push('/')
   }
 
+  setEdit = () => {
+    this.setState({
+      editing: true
+    });
+  }
+
+  updateUser = (username) => {
+    const { email } = this.props;
+    this.props.update( username, email );
+    this.setState({
+      editing: false,
+      email: this.state.email,
+      username: this.state.username,
+    })
+
+  }
+
   
     render() {
+
       const {username, email} = this.props
+
+      
+
       return(
       <div>
-        <button onClick={this.deleteUser}>delete</button>
-        {username}
-        {email}
+        <div>
+          <div>{username}</div>
+          <div>{email}</div>
+          <i class="fas fa-user-edit fa-3x" onClick={updateUser}></i>
+          <button onClick={this.deleteUser}>delete</button>
+        </div>
+        
       </div>
     )
   }
