@@ -11,7 +11,7 @@ import Profile from './components/User/Profile'
 
 export default(
   <Switch>
-    <Route path="/register" component={Register} />
+    <Route path="/register" component={Register}/>
     <Route path="/new_game" component={New_Game}/>
     <Route path="/played" component={Played}/>
     <Route path="/board" component={Board}/>

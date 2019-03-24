@@ -14,10 +14,8 @@ class App extends Component {
       <div className="App">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous"></link>
 
-        <div className='font-effect-anaglyph'>
           <Nav location={this.props.location}/>
           {routes}
-        </div>
       </div>
     );
   }

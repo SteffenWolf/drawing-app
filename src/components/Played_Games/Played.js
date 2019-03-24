@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import { updateUser } from '../../ducks/reducer'
+// import Auth from '../Auth/Auth'
 
 
 
@@ -61,18 +62,18 @@ class Played extends Component {
       let fullGameMap = []
 
       if(completedGame.length > 0){
-        mappedGames = completedGame.map((game) => <li onClick={() => this.getFullGame(game.id)}>{game.text}{game.id}</li>)
+        mappedGames = completedGame.map((game) => <li key={game.game_round} onClick={() => this.getFullGame(game.id)}>{game.text}{game.id}</li>)
         
       }
 
       if(this.state.isShown === true && this.state.fullGame){
         fullGameMap = this.state.fullGame.map((game) => {
           if(game.text === null){
-            return <div>{game.game_round+1}
-              <img src={game.image} alt="game element" key={game.game_round.toString()}/>
+            return <div key={game.game_round}>{game.game_round+1}
+              <img src={game.image} alt="game element"/>
             </div>
           } else {
-            return <p key={game.game_round.toString()}> {game.game_round+1} {game.text}</p>
+            return <p key={game.game_round}> {game.game_round+1} {game.text}</p>
           }
         })
 
@@ -80,14 +81,15 @@ class Played extends Component {
 
       
       return(
-      <div>
-
+      <div class="pusher">
+        <div>
         {this.state.isShown ? (
           <div>  {fullGameMap} </div>
+
           ) : (
             <ul>{mappedGames}</ul>
         )}
-        <button></button>
+        </div>
       </div>
     )
   }

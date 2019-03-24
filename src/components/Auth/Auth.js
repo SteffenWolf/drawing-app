@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { updateUser } from '../../ducks/reducer'
+import banner from '../images/Logo.png'
 
 
 
@@ -62,16 +63,17 @@ class Auth extends Component {
       const {username, password} = this.state;
       return(
         <div>
-          <h1>Login</h1>
-          <input placeholder='Username' value={username} onChange={e => this.handleChange('username', e.target.value)}/>
-          <br></br>
-          <input type='password' placeholder='Password' value={password} onChange={e => this.handleChange('password', e.target.value)}/>
-          <br></br>
-          <br></br>
-          <button onClick={this.login}>Login</button>
-          <br></br>
-          <Link to="/register"><button>Register</button></Link>
-
+          <div class="auth">
+              <img class="banner" src={banner} alt="logo"/>
+            <h1>Login</h1>
+            <br></br>
+            <input placeholder='Username' value={username} onChange={e => this.handleChange('username', e.target.value)}/>
+            <input type='password' placeholder='Password' value={password} onChange={e => this.handleChange('password', e.target.value)}/>
+            <div class='logReg'>
+              <button onClick={this.login}>Login</button>
+              <Link to="/register"><button>Register</button></Link>
+            </div>
+          </div>
         </div>
     )
   }

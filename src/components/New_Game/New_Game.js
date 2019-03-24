@@ -100,19 +100,19 @@ class New_Game extends Component {
       
       if (this.state.randomGames.length === 3) {
         if (this.state.randomGames[0].text === null){
-          game1 = <img src={this.state.randomGames[0].image} alt="game element"/>
+          game1 =   <img class="newGamePic" src={this.state.randomGames[0].image} alt="game element"/>
         } else {
-          game1 = <p>{this.state.randomGames[0].text}</p>
+          game1 = <p class="newGameText">  {this.state.randomGames[0].text}</p>
         }
 
         if (this.state.randomGames[1].text === null){
-          game2 = <img src={this.state.randomGames[1].image} alt="game element"/>
+          game2 = <img class="newGamePic" src={this.state.randomGames[1].image} alt="game element"/>
         } else {
           game2 = <p>{this.state.randomGames[1].text}</p>
         }
 
         if (this.state.randomGames[2].text === null){
-          game3 = <img src={this.state.randomGames[2].image} alt="game element"/>
+          game3 = <img class="newGamePic" src={this.state.randomGames[2].image} alt="game element"/>
         } else {
           game3 = <p>{this.state.randomGames[2].text}</p>
         }
@@ -121,7 +121,7 @@ class New_Game extends Component {
       return(
       <div className='font-effect-anaglyph'>
         {username}
-        <div>{game1}</div>
+        <div class="gameEl">{game1}</div>
         <button onClick={() => this.selectGame(0)}> Card 1</button>
         <div>{game2}</div>
         <button onClick={() => this.selectGame(1)}> Card 2</button>

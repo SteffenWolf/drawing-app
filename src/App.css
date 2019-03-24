@@ -1,38 +1,8 @@
-.App {
+/* .App {
   text-align: center;
   font-family: 'Allerta Stencil', sans-serif;
   
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-button {
-  font-family: 'Allerta Stencil', sans-serif;  
-}
-
-.proPic {
-  border-radius: 50%;
-  height: 65px;
-  width: 65px;
-  float: left
-}
-
-.navbar {
-  height: 65px;
-}
-
-.mainWrap {
-  width: 100vw
-}
+} */
 
 .canvas {
   touch-action: none;

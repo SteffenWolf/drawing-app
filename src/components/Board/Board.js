@@ -193,7 +193,6 @@ class Board extends Component {
 
     return (
         <div className="mainWrap">
-
           <h2>You are drawing: {text}</h2>
           <br></br>
           <canvas ref={this.image} className="canvas" width="500px" height="700px" id="canvas" style={{border: "1px solid black"}}> If you are reading this you are using a browser that is out of date. Please use the most recent version of Firefox or Chrome</canvas>

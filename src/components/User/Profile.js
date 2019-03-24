@@ -91,7 +91,7 @@ class Profile extends Component {
 
       return(
       <div>
-        <div>
+        <div class="pusher">
           <div>{username}</div>
           <div>{email}</div>
           <i class="fas fa-user-edit fa-3x" onClick={updateUser}></i>

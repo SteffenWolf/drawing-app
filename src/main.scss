@@ -1,12 +1,207 @@
-@import url('https://fonts.googleapis.com/css?family=Allerta+Stencil|Germania+One');
+@import url('https://fonts.googleapis.com/css?family=Allerta+Stencil|Germania+One|Permanent+Marker&effect=anaglyph|destruction');
 
-  $primary:  rgb(36, 34, 34);
-  $transGray: #939393;
 
-body, html {
-  height: 100%;
-  background-color: $myColor;
-};
-input {
-  border: none
+//colors
+  $primary:  rgb(34, 34, 34);
+  $transGray: rgba(0, 0, 0, 0.2);
+  $turq: #5ce1e6;
+  $red: #ff13a7;
+//fonts
+$font: Permanent Marker;
+$shadow: -.5px .5px $turq, .5px .5px $red; 
+$fntclr: #666666;
+
+
+//transitions
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
+
+.pusher {
+  margin-top: 250px;
+  width: 100%;
+
+  #root{
+    width: 100%
+  }
+
+  p {
+    font-family: $font;
+    color: $fntclr;
+  }    
+  
+}
+
+body {
+  background-color: $primary;
+  font-family: $font;
+  text-shadow: $shadow;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+};
+
+canvas {
+  margin-top: 155px;
+}
+
+input {
+    border: none;
+    background-color: $transGray;
+    border-radius: 5px;
+    font-family: $font;
+    border-radius: 15px;
+    margin: 5px;
+    text-indent: 15px;
+    text-shadow: $shadow;
+    color: $fntclr;
+    letter-spacing: 1.5px;
+
+};
+
+h1 {
+  font-family: $font;
+  font-size: 50px;
+  margin: 15px;
+  color: $fntclr;
+};
+
+p {
+  font-family: $font;
+  font-size: 20px;
+  color: $fntclr;
+}    
+
+button {
+  background-color: transparent;
+  border-style: none;
+  margin: 2px;
+  text-shadow: -.5px .5px $turq, .8px .5px $red;
+  font-size: 33px;
+  letter-spacing: 1.5px;
+  font-family: $font;
+  color: $fntclr;
+}
+
+.newGamePic {
+  height: 250px;
+}
+
+.gameEl {
+  margin-top: 100px;
+}
+
+.banner {
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+.navWrapper {
+  width: 100%;
+}
+
+ul {
+  font-family: $font;
+  color: $fntclr;
+}
+
+
+.navbar {
+  font-family: $font;
+  color: $fntclr;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  top: 0px;
+  width: 100%;
+  height: 12%;
+  background-color: $primary;
+  flex-direction: row;
+  margin-bottom: 100px;
+  padding-bottom: 15px;
+  text-decoration: none;
+
+  @media (min-width: 601px){
+    .sidenav{
+      min-width: 100%;
+      justify-content: space-around;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+    #btn {
+      display: none
+    }
+
+    ul {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+  
+
+  @media (max-width: 600px){
+
+    
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: $transGray;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      
+      .navText {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: $fntclr;
+        display: block;
+        transition: 1s;
+        
+        Link {
+          text-decoration: none;
+        }
+        
+        
+        &:hover {
+          color: $turq;
+          
+          &:nth-child(odd){
+            color: $red
+          }
+        }
+      }
+      
+      .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+      
+    }
+    .openBtn {
+      font-size: 36px;
+      margin-left: 15px;
+      margin-top: 10px;
+    }
+  }
+  }
