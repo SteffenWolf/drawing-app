@@ -44,9 +44,14 @@ class Board extends Component {
 
   remove = () => {
     let undos = this.state.undos
+    
+    if(this.state.undos.length > 0){
+      this.ctx.putImageData(this.state.undos.pop(), 0, 0)
+      undos.push(this.ctx.getImageData(0,0, this.image.width, this.image.height))    
+    } else {
 
-    this.ctx.putImageData(this.state.undos.pop(), 0, 0)
-    undos.push(this.ctx.getImageData(0,0, this.image.width, this.image.height))    
+    }
+
     
   }
   
