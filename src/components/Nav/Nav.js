@@ -4,7 +4,7 @@ import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { clearUser } from '../../ducks/reducer'
-import {logo} from '../images/test.png'
+import logo from "../../../src/components/images/onlyLogo.png"
 
 class Nav extends Component {
   constructor(props){
@@ -19,14 +19,14 @@ class Nav extends Component {
   openNav = () => {
     this.setState({
       navWidth: 250,
-      showHamburger: 'hidden'
+      showHamburger: 0,
     })
   }
 
   closeNav = () => {
     this.setState({
       navWidth: 0,
-      showHamburger: 'visible'
+      showHamburger: 1
     })
   }
 
@@ -34,6 +34,12 @@ class Nav extends Component {
     await axios.post('/api/auth/logout');
     this.props.clearUser()
     await this.props.history.push('/');
+  }
+
+  logClose = () => {
+    this.closeNav();
+    this.logout();
+
   }
   
 
@@ -44,24 +50,29 @@ class Nav extends Component {
     if (this.props.location.pathname !== '/' && this.props.location.pathname !== '/register'){
       return(
         <div class="navbar">
-
-        <img src={logo} alt="logo"/>
           <div id="mySidenav" className="sidenav" style={{width: this.state.navWidth}}>
             <ul>
-              <span id="btn" class="navText"  className="closebtn" onClick={this.closeNav}><i class="fas fa-minus-square"></i></span>
-
-              <Link to={'/new_game'}>
-                <span class="navText" >New Game</span>
+              <a id="btn" class="navText"  className="closebtn" onClick={this.closeNav}><i class="fas fa-minus-square"></i></a>
+              <Link class="link" to={'/new_game'}>
+                <a class="navText" onClick={this.closeNav} >New Game</a>
               </Link>
 
-              <Link to={'/played'}>
-                <span class="navText" >Gallery</span>
+              <Link class="link" to={'/profile'}>
+                <a class="navText" onClick={this.closeNav} >Profile</a>
               </Link>
-              <span class="navText" onClick={this.logout}>Logout</span>
+
+              <Link class="link" to={'/played'}>
+                <a class="navText" onClick={this.closeNav} >Gallery</a>
+              </Link>
+              <a class="navText" onClick={this.logClose}>Logout</a>
 
             </ul>
           </div>
-          <span id="btn" class="openBtn" onClick={this.openNav} style={{visibility: this.state.showHamburger}} ><i class="fas fa-plus-square"></i></span>
+          <a id="btn" class="openBtn" onClick={this.openNav} style={{opacity: this.state.showHamburger}} ><i class="fas fa-plus-square"></i></a>
+              <div class="navLogoWrap"> 
+                <img class="navlogo" src={logo} alt="doodler"/>
+              </div>
+              <img src={profile_pic} class="navlogo" />
         </div>
       )
       

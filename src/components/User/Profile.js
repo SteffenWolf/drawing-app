@@ -13,10 +13,12 @@ class Profile extends Component {
       username: '',
       email: '',
       id: '',
-      profile_pic: '',
+      profilePic: '',
       editing: false,
       completedGame: [],
       fullGame: [],
+      modWidth: 0,
+      showOpen: 'hidden',
 
     }
   }
@@ -65,40 +67,67 @@ class Profile extends Component {
     await this.props.history.push('/')
   }
 
-  setEdit = () => {
+  handleChange(prop, val) {
     this.setState({
-      editing: true
-    });
-  }
-
-  updateUser = (username) => {
-    const { email } = this.props;
-    this.props.update( username, email );
-    this.setState({
-      editing: false,
-      email: this.state.email,
-      username: this.state.username,
+      [prop]: val
     })
-
   }
 
-  
+  openMod = () => {
+    if(this.state.showOpen === 'hidden'){
+      this.setState({
+        navWidth: `90%`,
+        showOpen: 'visible',
+      })
+    } else {
+      this.setState({
+        navWidth: 0,
+        showOpen: 'hidden'
+      })
+    }
+  }
+
+  updateUser = async () => {
+    let profile_pic = this.state.profilePic
+
+    try {
+      let res = await axios.put('/api/user/updateuser', { profile_pic});
+      await this.getUser();
+      this.props.updateUser(res.data)
+      await this.getUser();
+      this.reset();
+      console.log(res.data)
+      console.log(this.props.profile_pic)
+
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+  reset = () => {
+    this.setState({
+      profilePic: ''
+    })
+  }
+
     render() {
-
-      const {username, email} = this.props
-
-      
+      const {username, email, profile_pic} = this.props
+      const {profilePic} = this.state
 
       return(
-      <div>
-        <div class="pusher">
-          <div>{username}</div>
-          <div>{email}</div>
-          <i class="fas fa-user-edit fa-3x" onClick={updateUser}></i>
-          <button onClick={this.deleteUser}>delete</button>
+        <div class="modContainer">
+        <img class="banner" src={profile_pic} alt="profile image"/>
+        <span class="openMod" onClick={this.openMod}><i class="fas fa-user-edit"></i></span>
+          <div class="mod" style={{visibility: this.state.showOpen, width: this.state.modWidth}}>
+            <ul>
+              <input placeholder='profilePic' value={profilePic} onChange={e => this.handleChange('profilePic', e.target.value)}/>
+              <button onClick={this.updateUser}>Update Profile Pic</button>
+              <span>delete account</span>
+            </ul>
+
+
+          </div>
         </div>
-        
-      </div>
     )
   }
 }

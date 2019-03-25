@@ -3,5 +3,6 @@
 -- where username = username;
 
 update users
-set email = ${email}
-where id = ${id};
+set profile_pic = $1
+where id = $2;
+-- returning profile_pic

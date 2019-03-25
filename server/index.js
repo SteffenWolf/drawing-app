@@ -43,6 +43,7 @@ app.post('/api/auth/register', ac.register);
 app.post('/api/auth/login', ac.login);
 app.post('/api/auth/logout', ac.logout);
 app.get('/api/auth/current', ac.getUser);
+app.put('/api/user/updateuser', ac.updateUser)
 
 //GAME ENDPOINTS
 app.delete('/api/user/delete/:id', ac.deleteUser)
@@ -53,6 +54,7 @@ app.get('/api/game/randomgame', gc.getRandomGame)
 app.get('/api/game/completedgame', gc.getCompleted)
 app.get('/api/game/fullgame/:game_id', gc.getFullGame)
 app.get('/api/game/getusergame/', gc.getUserGame)
+
 
 //S3
 app.get('/sign-s3', (req, res) => {

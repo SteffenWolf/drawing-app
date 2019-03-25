@@ -62,18 +62,19 @@ class Played extends Component {
       let fullGameMap = []
 
       if(completedGame.length > 0){
-        mappedGames = completedGame.map((game) => <li key={game.game_round} onClick={() => this.getFullGame(game.id)}>{game.text}{game.id}</li>)
+        mappedGames = completedGame.map((game) => <li key={game.game_round} onClick={() => this.getFullGame(game.id)}>{game.text}</li>)
         
       }
 
       if(this.state.isShown === true && this.state.fullGame){
         fullGameMap = this.state.fullGame.map((game) => {
           if(game.text === null){
-            return <div key={game.game_round}>{game.game_round+1}
-              <img src={game.image} alt="game element"/>
+            return <div key={game.game_round}>
+              <li> Round {game.game_round+1} image.</li>
+              <img class="newGamePic" src={game.image} alt="game element"/>
             </div>
           } else {
-            return <p key={game.game_round}> {game.game_round+1} {game.text}</p>
+            return <li key={game.game_round}> {game.game_round+1} {game.text}</li>
           }
         })
 
@@ -87,7 +88,7 @@ class Played extends Component {
           <div>  {fullGameMap} </div>
 
           ) : (
-            <ul>{mappedGames}</ul>
+            <ul> {mappedGames} </ul>
         )}
         </div>
       </div>

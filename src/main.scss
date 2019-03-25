@@ -8,7 +8,7 @@
   $red: #ff13a7;
 //fonts
 $font: Permanent Marker;
-$shadow: -.5px .5px $turq, .5px .5px $red; 
+$shadow: -.8px .5px $turq, .8px .5px $red; 
 $fntclr: #666666;
 
 
@@ -29,10 +29,9 @@ $fntclr: #666666;
     width: 100%
   }
 
-  p {
-    font-family: $font;
-    color: $fntclr;
-  }    
+  a {
+    text-decoration: none;
+  }
   
 }
 
@@ -66,6 +65,34 @@ input {
 
 };
 
+a:hover, a:active {
+  color: $turq;
+  
+  &:hover {
+    color: $turq;
+    
+    a:nth-child(2n+1){
+      color: $red;
+    }
+  }
+}
+
+li {
+  font-family: $font;
+  font-size: 28px;
+  color: $fntclr;
+  text-shadow: $shadow;
+  list-style: none;
+}
+
+
+p {
+  font-family: $font;
+  font-size: 28px;
+  color: $fntclr;
+  text-shadow: $shadow;
+}    
+
 h1 {
   font-family: $font;
   font-size: 50px;
@@ -73,16 +100,11 @@ h1 {
   color: $fntclr;
 };
 
-p {
-  font-family: $font;
-  font-size: 20px;
-  color: $fntclr;
-}    
 
 button {
   background-color: transparent;
   border-style: none;
-  margin: 2px;
+  margin: 20px;
   text-shadow: -.5px .5px $turq, .8px .5px $red;
   font-size: 33px;
   letter-spacing: 1.5px;
@@ -90,12 +112,44 @@ button {
   color: $fntclr;
 }
 
+.modContainer {
+  min-width: 100%;
+  min-height: 100%;
+  margin-top: 35vh;
+  margin-bottom: 35vh;
+}
+
+
+.profileInput {
+  width: 65%;
+}
+
+.mod {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100%;
+  min-height: 75%;
+  flex-wrap: wrap;
+
+  ul {
+    max-width: 100%;
+  }
+}
+
+.newGameText {
+  padding: 25px;
+  margin-top:25px;
+}
+
 .newGamePic {
-  height: 250px;
+  height: 200px;
+  margin-top: 25px;
+  padding: 10px;
 }
 
 .gameEl {
-  margin-top: 100px;
+  margin-top: 75px;
 }
 
 .banner {
@@ -121,74 +175,95 @@ ul {
   justify-content: space-between;
   top: 0px;
   width: 100%;
-  height: 12%;
+  max-height: 100px;
   background-color: $primary;
   flex-direction: row;
-  margin-bottom: 100px;
-  padding-bottom: 15px;
   text-decoration: none;
-
-  @media (min-width: 601px){
-    .sidenav{
-      min-width: 100%;
-      justify-content: space-around;
-      align-items: center;
-      justify-content: center;
-
-    }
-
-    #btn {
-      display: none
-    }
-
-    ul {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-around;
-    }
-  }
   
 
-  @media (max-width: 600px){
+    .navlogo {
+      width: 100px;
+      max-height: 100px;
+      border-radius: 50%;
+      padding: -25px;
+    }
+
+    .link {
+      text-decoration: none;
+    }
+
+    .navText {
+      text-decoration: none;
+      color: $fntclr;
+      font-size: 33px;
+    }
+    
+    
+    
+    @media (min-width: 601px){
+      
+      .sidenav{
+        min-width: 100%;
+        justify-content: space-around;
+        align-items: center;
+        justify-content: center;
+        
+      }
+      
+      #btn {
+        display: none
+      }
+      
+      ul {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+      }
+    }
 
     
-    .sidenav {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      background-color: $transGray;
-      overflow-x: hidden;
-      transition: 0.5s;
-      padding-top: 60px;
+    
+    
+    @media (max-width: 600px){
       
-      .navText {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: $fntclr;
-        display: block;
-        transition: 1s;
+      
+      .sidenav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: $transGray;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
         
-        Link {
+        .navText {
+          padding: 8px 8px 8px 32px;
           text-decoration: none;
+          font-size: 25px;
+          color: $fntclr;
+          display: block;
+          transition: 1s;
+
         }
-        
+      }
+      
+      a:hover, a:active {
+        color: $turq;
         
         &:hover {
           color: $turq;
           
-          &:nth-child(odd){
-            color: $red
+          a:nth-child(2n+1){
+            color: $red;
           }
         }
       }
-      
       .closebtn {
         position: absolute;
         top: 0;
@@ -200,8 +275,8 @@ ul {
     }
     .openBtn {
       font-size: 36px;
-      margin-left: 15px;
-      margin-top: 10px;
+      margin-left:  20px;
+      margin-top: 25px;
+      transition: .5s;
     }
-  }
   }

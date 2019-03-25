@@ -75,19 +75,13 @@ module.exports = {
   },
 
   updateUser: async (req, res) => {
-    const { id } = req.params;
-    const { username, email } = req.body;
+    const { profile_pic } = req.body;
+    const { id } = req.session.user;
     const db = req.app.get('db');
-    let takenUsername = await
-     db.Auth.check_user({ username, email });
-    takenUsername = +takenUsername[0].count;
-    if (takenUsername !== 0) {
-      return res.sendStatus(409);
-    }
     
-    db.Users.updateUser([username, email])
+    db.Users.updateUser([profile_pic, id])
     .then(users => {
-      res.status(200).send(username, email)
+      res.status(200).send(profile_pic)
     })
     .catch(err => {
       res.status(500).send(err)
