@@ -2,15 +2,21 @@ module.exports = {
 
   createGame: async (req, res) => {
     const { text } = req.body
-    const { user_id } = req.session
+    // const { user_id } = req.session.user
+    const  user_id = req.session.user.id    
+
+    console.log(user_id, 111111111);
+    
 
     const db = req.app.get('db');
     try {
       const game = await db.Game.createGame();
-      
       let { game_id } = game[0]
-      // await db.Game.createUserGame({user_id, game_id});
-      await db.Game.createGameData({game_id, text, game_round:0});
+      await db.Game.createUserGame({user_id, game_id});
+      console.log(user_id, game_id, text);
+      await db.Game.createGameData({game_id, text, game_round:0, user_id});
+
+      
       res.sendStatus(204)
     } catch(err) {
       (console.log(err))
@@ -21,6 +27,8 @@ module.exports = {
   addImage: async (req,res) => {
     const { image, current_turn, id,  } = req.body
     const  user_id = req.session.user.id
+    console.log(id, req.body);
+    
 
     const db = req.app.get('db');
     try {

@@ -47,8 +47,8 @@ body {
   flex-wrap: wrap;
 };
 
-canvas {
-  margin-top: 155px;
+.canvaspusher {
+  padding-top: 120px;
 }
 
 input {
@@ -58,10 +58,13 @@ input {
     font-family: $font;
     border-radius: 15px;
     margin: 5px;
+    font-size: 22px;
     text-indent: 15px;
     text-shadow: $shadow;
     color: $fntclr;
     letter-spacing: 1.5px;
+    width: 65%;
+    max-width: 350px;
 
 };
 
@@ -91,7 +94,14 @@ p {
   font-size: 28px;
   color: $fntclr;
   text-shadow: $shadow;
-}    
+}
+
+label {
+  font-family: $font;
+  font-size: 28px;
+  color: $fntclr;
+  text-shadow: $shadow;
+}
 
 h1 {
   font-family: $font;
@@ -102,7 +112,10 @@ h1 {
 
 
 button {
-  background-color: transparent;
+  background-color: $transGray;
+  border-radius: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
   border-style: none;
   margin: 20px;
   text-shadow: -.5px .5px $turq, .8px .5px $red;
@@ -179,6 +192,7 @@ ul {
   background-color: $primary;
   flex-direction: row;
   text-decoration: none;
+  box-shadow: 10px 10px 10px black;
   
 
     .navlogo {

@@ -97,7 +97,7 @@ class New_Game extends Component {
       let game1 = 'Fetching..';
       let game2 = 'Fetching..';
       let game3 = 'Fetching..';
-      
+      console.log(11111111, this.state.randomGames)
       if (this.state.randomGames.length === 3) {
         if (this.state.randomGames[0].text === null){
           game1 =   <img class="newGamePic" src={this.state.randomGames[0].image} alt="game element"/>

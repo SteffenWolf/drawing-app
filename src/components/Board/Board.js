@@ -44,14 +44,9 @@ class Board extends Component {
 
   remove = () => {
     let undos = this.state.undos
-    
-    if(this.state.undos.length > 0){
-      this.ctx.putImageData(this.state.undos.pop(), 0, 0)
-      undos.push(this.ctx.getImageData(0,0, this.image.width, this.image.height))    
-    } else {
 
-    }
-
+    this.ctx.putImageData(this.state.undos.pop(), 0, 0)
+    undos.push(this.ctx.getImageData(0,0, this.image.width, this.image.height))    
     
   }
   
@@ -198,8 +193,7 @@ class Board extends Component {
 
     return (
         <div className="mainWrap">
-          <h2>You are drawing: {text}</h2>
-          <br></br>
+          <p class="canvaspusher">You are drawing: {text}</p>
           <canvas ref={this.image} className="canvas" width="500px" height="700px" id="canvas" style={{border: "1px solid black"}}> If you are reading this you are using a browser that is out of date. Please use the most recent version of Firefox or Chrome</canvas>
           <br></br>
           <div className='font-effect-neon'>
@@ -217,9 +211,9 @@ class Board extends Component {
             <button className="colors"  onClick={() => this.setColor('#DB0000')} style={{borderRadius: '50%', backgroundColor: '#DB0000', height: '25px', width: '25px', border: 'none'}}></button>
             <button className="colors"  onClick={() => this.setColor('#FFFFFF')} style={{borderRadius: '50%', backgroundColor: '#FFFFFF', height: '25px', width: '25px', borderBottomStyle: 'outset', borderColor: 'red', borderWidht: '.1px'}}></button>
             <button className="colors"  onClick={() => this.setColor('rgba(255, 255, 255, 1)', true)}>erase</button>
-            <input type="range" min="2" max="75" name="thickness" value={this.state.value}  step="1" onChange={(e) => this.setWidth(e.target.value)} /><label for="thickness">Thicccness</label> 
+            <input type="range" min="2" max="75" name="thickness" value={this.state.value}  step="1" onChange={(e) => this.setWidth(e.target.value)} /><label for="thickness">Line Thickness</label> 
             
-            <button id="undo" onClick={this.remove}>UNDO</button>
+            {/* <button id="undo" onClick={this.remove}>UNDO</button> */}
             <button onClick={this.submitImage}>Submit</button>
             <br></br>
           </div>
