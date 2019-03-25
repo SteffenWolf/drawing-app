@@ -15,6 +15,9 @@ const app = express(), {SERVER_PORT,
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY} = process.env;
 
+app.use( express.static( `${__dirname}/../build` ) 
+);
+
 const pgPool = new pg.Pool({
   connectionString: CONNECTION_STRING
 })
